@@ -238,7 +238,7 @@ if(isQCF==false) {
             Row(
               children: [
                 Checkbox(
-                  fillColor: MaterialStatePropertyAll(
+                  fillColor: WidgetStatePropertyAll(
                       primaryColors[getValue("quranPageolorsIndex")]),
                   checkColor: backgroundColors[getValue("quranPageolorsIndex")],
                   value: getValue("showSuraHeader"),
@@ -259,7 +259,7 @@ if(isQCF==false) {
             Row(
               children: [
                 Checkbox(
-                  fillColor: MaterialStatePropertyAll(
+                  fillColor: WidgetStatePropertyAll(
                       primaryColors[getValue("quranPageolorsIndex")]),
                   checkColor: backgroundColors[getValue("quranPageolorsIndex")],
                   value: getValue("showBottomBar"),
@@ -279,7 +279,7 @@ if(isQCF==false) {
             ),    Row(
               children: [
                 Checkbox(
-                  fillColor: MaterialStatePropertyAll(
+                  fillColor: WidgetStatePropertyAll(
                       primaryColors[getValue("quranPageolorsIndex")]),
                   checkColor: backgroundColors[getValue("quranPageolorsIndex")],
                   value: isQCF,
@@ -300,7 +300,7 @@ if(isQCF==false) {
             Row(
               children: [
                 Checkbox(
-                  fillColor: MaterialStatePropertyAll(
+                  fillColor: WidgetStatePropertyAll(
                       primaryColors[getValue("quranPageolorsIndex")]),
                   checkColor: backgroundColors[getValue("quranPageolorsIndex")],
                   value: getValue("addTafseer"),

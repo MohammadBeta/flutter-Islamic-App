@@ -3,7 +3,6 @@ import 'dart:math';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nabd/GlobalHelpers/constants.dart';
 import 'package:nabd/GlobalHelpers/hive_helper.dart';
@@ -207,8 +206,8 @@ class _SibhaPageState extends State<SibhaPage> {
           actions: [
             IconButton(
                 onPressed: () {
-                  showAnimatedDialog(
-                      alignment: Alignment.center,
+showDialog(
+                      // alignment: Alignment.center,
                       // animationType: DialogTransitionType.,
                       context: context,
                       builder: (c) => AddTasbeehDialog(
@@ -370,7 +369,7 @@ class _SibhaPageState extends State<SibhaPage> {
             Expanded(
               child: InkWell(
                   overlayColor:
-                      MaterialStatePropertyAll(Colors.white.withOpacity(.2)),
+                      WidgetStatePropertyAll(Colors.white.withOpacity(.2)),
                   splashColor: Colors.white.withOpacity(.1),
                   focusColor: Colors.white.withOpacity(.1),
                   hoverColor: Colors.white.withOpacity(.1),

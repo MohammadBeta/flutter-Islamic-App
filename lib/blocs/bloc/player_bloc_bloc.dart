@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nabd/Core/audiopage/models/reciter.dart';
 // import 'package:nabd/Core/home.dart';r
 import 'package:nabd/core/home.dart';
+import 'package:nabd/main.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:bloc/bloc.dart';
@@ -22,15 +23,16 @@ part 'player_bloc_state.dart';
 
 class PlayerBlocBloc extends Bloc<PlayerBlocEvent, PlayerBlocState> {
   PlayerBlocBloc() : super(PlayerBlocInitial()) {
-    AudioPlayer? audioPlayer;
+    // AudioPlayer? audioPlayer;
 
     on<PlayerBlocEvent>((event, emit) async {
       // ignore: unnecessary_null_comparison
       if (event is StartPlaying) {
-        if (audioPlayer != null) {
-          audioPlayer!.dispose();
-        }
-        audioPlayer = AudioPlayer();
+        // if (audioPlayer != null) {
+          // audioPlayer!.dispose();
+        // }
+        // audioPlayer = AudioPlayer();
+        audioPlayer.stop();
         int nextMediaId = 0;
         List<String> surahNumbers = event.moshaf.surahList.split(',');
         final appDir = Directory("/storage/emulated/0/Download/skoon/");

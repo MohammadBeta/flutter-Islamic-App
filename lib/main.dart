@@ -16,6 +16,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart'
 import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:just_audio/just_audio.dart';
 // import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:nabd/blocs/bloc/bloc/player_bar_bloc.dart';
@@ -40,17 +41,20 @@ import 'package:superellipse_shape/superellipse_shape.dart';
 import 'package:workmanager/workmanager.dart';
 import 'GlobalHelpers/messaging_helper.dart';
 // import 'package:alarm/alarm.dart';
-import 'package:firebase_core/firebase_core.dart';
+final AudioPlayer audioPlayer = AudioPlayer();
 
 
 // import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await ez.EasyLocalization.ensureInitialized();
-await Firebase.initializeApp(
-);  
-// await PeriodicAlarm.init();
 
+// await PeriodicAlarm.init();
+  await JustAudioBackground.init(
+    androidNotificationChannelId: 'com.yourapp.audio',
+    androidNotificationChannelName: 'Quran Player',
+    androidNotificationOngoing: true,
+  );
 
   // we are not checking the status as it is an example app. You should (must) check it in a production app
 

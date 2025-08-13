@@ -159,7 +159,7 @@ class _ZikrPageState extends State<ZikrPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       InkWell(
-                          overlayColor: MaterialStatePropertyAll(
+                          overlayColor: WidgetStatePropertyAll(
                               Colors.white.withOpacity(.25)),
                           splashColor: Colors.white.withOpacity(.25),
                           focusColor: Colors.white.withOpacity(.25),

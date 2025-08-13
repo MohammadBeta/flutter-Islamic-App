@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 
 Future<File> saveImageToTempDirectory(Uint8List imageBytes) async {
   final tempDir = await getTemporaryDirectory();
@@ -16,7 +16,7 @@ Future<File> saveImageToTempDirectory(Uint8List imageBytes) async {
 
 Future<void> saveImageToGallery(Uint8List capturedImage) async {
   try {
-    final result = await ImageGallerySaver.saveImage(
+    final result = await ImageGallerySaverPlus.saveImage(
       capturedImage,
       quality: 100, // Adjust the image quality as needed
     );

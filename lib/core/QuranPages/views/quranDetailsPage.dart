@@ -1,7 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:audio_meta/audio_meta.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
+import 'package:ffmpeg_kit_flutter_new/ffmpeg_session.dart';
+import 'package:ffmpeg_kit_flutter_new/return_code.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:fluttericon/linearicons_free_icons.dart';
@@ -37,11 +41,11 @@ import 'package:path_provider/path_provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:share_plus/share_plus.dart';
 import 'dart:io';
-import 'package:flutter_media_metadata/flutter_media_metadata.dart';
+// import 'package:flutter_media_metadata/flutter_media_metadata.dart';
 // import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
-import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
+// import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
 import 'package:easy_container/easy_container.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +62,6 @@ import 'package:visibility_detector/visibility_detector.dart';
 import 'package:wakelock/wakelock.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:intl/intl.dart';
 import 'package:arabic_roman_conv/arabic_roman_conv.dart';
 import '../helpers/translation/get_translation_data.dart' as translate;
@@ -4073,7 +4076,7 @@ class QuranDetailsPageState extends State<QuranDetailsPage> {
                                   EasyContainer(
                                     color: Colors.transparent,
                                     onTap: () async {
-                                      await showAnimatedDialog(
+                                      await showDialog(
                                           context: context,
                                           builder: (context) => BookmarksDialog(
                                                 suraNumber: surahNumber,
@@ -4410,8 +4413,8 @@ class QuranDetailsPageState extends State<QuranDetailsPage> {
   takeScreenshotFunction(index, surahNumber, verseNumber) {
     int firstVerse = verseNumber;
     int lastVerse = verseNumber;
-    showAnimatedDialog(
-      animationType: DialogTransitionType.size,
+    showDialog(
+      // animationType: DialogTransitionType.size,
       context: context,
       builder: (builder) {
         return StatefulBuilder(builder: (context, setstatter) {
@@ -4525,7 +4528,7 @@ class QuranDetailsPageState extends State<QuranDetailsPage> {
                 const SizedBox(height: 10.0), // Add spacing between rows
                 RadioListTile(
                   activeColor: highlightColors[getValue("quranPageolorsIndex")],
-                  fillColor: MaterialStatePropertyAll(
+                  fillColor: WidgetStatePropertyAll(
                       primaryColors[getValue("quranPageolorsIndex")]),
                   title: Text(
                     'asimage'.tr(),
@@ -4543,7 +4546,7 @@ class QuranDetailsPageState extends State<QuranDetailsPage> {
                 ),
                 RadioListTile(
                   activeColor: highlightColors[getValue("quranPageolorsIndex")],
-                  fillColor: MaterialStatePropertyAll(
+                  fillColor: WidgetStatePropertyAll(
                       primaryColors[getValue("quranPageolorsIndex")]),
                   title: Text(
                     'astext'.tr(),
@@ -4563,7 +4566,7 @@ class QuranDetailsPageState extends State<QuranDetailsPage> {
                   Row(
                     children: [
                       Checkbox(
-                        fillColor: MaterialStatePropertyAll(
+                        fillColor: WidgetStatePropertyAll(
                             primaryColors[getValue("quranPageolorsIndex")]),
                         checkColor:
                             backgroundColors[getValue("quranPageolorsIndex")],
@@ -4588,7 +4591,7 @@ class QuranDetailsPageState extends State<QuranDetailsPage> {
                 Row(
                   children: [
                     Checkbox(
-                      fillColor: MaterialStatePropertyAll(
+                      fillColor: WidgetStatePropertyAll(
                           primaryColors[getValue("quranPageolorsIndex")]),
                       checkColor:
                           backgroundColors[getValue("quranPageolorsIndex")],
@@ -4612,7 +4615,7 @@ class QuranDetailsPageState extends State<QuranDetailsPage> {
                 Row(
                   children: [
                     Checkbox(
-                      fillColor: MaterialStatePropertyAll(
+                      fillColor: WidgetStatePropertyAll(
                           primaryColors[getValue("quranPageolorsIndex")]),
                       checkColor:
                           backgroundColors[getValue("quranPageolorsIndex")],
@@ -5034,7 +5037,7 @@ class QuranDetailsPageState extends State<QuranDetailsPage> {
 
     final dio = Dio();
     final appDir = await getTemporaryDirectory();
-    final ffmpeg = FlutterFFmpeg();
+   
 
     final fullSuraFilePath =
         "${appDir.path}-$reciterIdentifier-${suraName.replaceAll(" ", "")}.mp3";
@@ -5062,13 +5065,13 @@ class QuranDetailsPageState extends State<QuranDetailsPage> {
           try {
             await dio.download(audioUrl, filePath);
             // print('Audio file downloaded and cached: $filePath');
-            final metadata = await MetadataRetriever.fromFile(File(filePath));
+            final metadata = await AudioMeta.fromFile(File(filePath));
             verseNumberAndDuration.add({
               "verseNumber": verse,
               "startDuration": startDuration,
-              "endDuration": startDuration + ((metadata.trackDuration!))
+              "endDuration": startDuration + ((metadata.duration.inMilliseconds))
             });
-            startDuration = startDuration + ((metadata.trackDuration!));
+            startDuration = startDuration + ((metadata.duration.inMilliseconds));
           } catch (e) {
             // print('Error downloading and caching audio: $e');
           }
@@ -5088,9 +5091,9 @@ class QuranDetailsPageState extends State<QuranDetailsPage> {
       String cmd =
           "$inputOptions -filter_complex 'concat=n=${audioFilePaths.length}:v=0:a=1[a]' -map '[a]' -codec:a libmp3lame -qscale:a 2 $fullSuraFilePath";
 
-      final int resultCode = await ffmpeg.execute(cmd);
-
-      if (resultCode == 0) {
+      final FFmpegSession fFmpegSession = await FFmpegKit.execute(cmd);
+ReturnCode? resultCode = await fFmpegSession.getReturnCode();
+      if (resultCode!.getValue() == 0) {
         // print('Full sura audio file combined successfully: $fullSuraFilePath');
         Fluttertoast.showToast(msg: "Done...");
       } else {
@@ -5099,38 +5102,9 @@ class QuranDetailsPageState extends State<QuranDetailsPage> {
       }
     }
 
-    // // Generate JSON file with durations for the full sura audio
-    // final duration = await getAudioDuration(fullSuraFilePath);
-    // final verseDurations = List.generate(totalVerses, (verse) {
-    //   return {'verse': verse + 1, 'duration': duration / totalVerses};
-    // });
-
-    // final jsonFilePath = '${appDir.path}/$reciterIdentifier/${suraName.trim()}/verse_durations.json';
-    // File(jsonFilePath).writeAsString(jsonEncode(verseDurations));
-
-    // print('JSON file with verse durations for the full sura audio generated: $jsonFilePath');
   }
 
-  // Future<double> getAudioDuration(String filePath) async {
-  //   final ffmpeg = FlutterFFmpeg();
-  //   final result =
-  //       await ffmpeg.executeWithArguments(['-i', filePath, '-f', 'null', '-']);
-  //   final durationMatch =
-  //       RegExp(r"Duration: ([\d:.]+)").firstMatch(result.toString());
-
-  //   if (durationMatch != null) {
-  //     final durationString = durationMatch.group(1);
-  //     final List<String> timeComponents = durationString!.split(':');
-  //     if (timeComponents.length == 3) {
-  //       final hours = int.parse(timeComponents[0]);
-  //       final minutes = int.parse(timeComponents[1]);
-  //       final seconds = double.parse(timeComponents[2]);
-  //       return hours * 3600 + minutes * 60 + seconds;
-  //     }
-  //   }
-
-  //   return 0.0; // Return 0 if duration extraction fails
-  // }
+  
 }
 
 class Result {

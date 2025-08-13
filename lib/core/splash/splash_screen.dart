@@ -62,12 +62,6 @@ class _SplashScreenState extends State<SplashScreen> {
   getAndStoreRecitersData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    await JustAudioBackground.init(
-      androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
-      androidNotificationChannelName: 'Audio playback',
-      androidNotificationOngoing: true,
-    );
-
     Response response;
     Response response2;
     Response response3;

@@ -76,7 +76,7 @@ class _ScreenShotPreviewPageState extends State<HadithScreenShotPreviewPage> {
             Row(
               children: [
                 Checkbox(
-                  fillColor: MaterialStatePropertyAll(
+                  fillColor: WidgetStatePropertyAll(
                       primaryColors[getValue("quranPageolorsIndex")]),
                   checkColor: backgroundColors[getValue("quranPageolorsIndex")],
                   value: addAppSlogan,

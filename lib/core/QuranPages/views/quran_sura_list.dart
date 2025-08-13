@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_media_metadata/flutter_media_metadata.dart';
+// import 'package:flutter_media_metadata/flutter_media_metadata.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttericon/mfg_labs_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
