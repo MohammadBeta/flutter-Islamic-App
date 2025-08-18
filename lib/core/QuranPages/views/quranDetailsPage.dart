@@ -377,7 +377,7 @@ class QuranDetailsPageState extends State<QuranDetailsPage> {
             builder: (context2) {
               if (getValue("alignmentType") == "pageview") {
                 return PageView.builder(
-                  physics: const CustomPageViewScrollPhysics(),
+                  // physics: const CustomPageViewScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   onPageChanged: (a) {
                     setState(() {
