@@ -5,7 +5,10 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
-android {        ndkVersion = "29.0.13599879"
+android {    
+        // ndkVersion = flutter.ndkVersion
+    // ndkVersion = "27.0.12077973"
+    ndkVersion = "26.3.11579264"
     namespace = "com.skoon.muslim.app"
     compileSdk = flutter.compileSdkVersion
 
