@@ -1,4 +1,4 @@
-# Skoon - Flutter Islamic App
+# Flutter Islamic App
 
 <div style="display: flex; justify-content: space-around;">
   <img src="assets/screenshot2.jpg" alt="Screenshot 2" width="300">
